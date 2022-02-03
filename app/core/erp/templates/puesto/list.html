@@ -1,0 +1,26 @@
+{% extends 'list.html' %}
+{% load static %}
+{% block head_list %}
+    <script src="{% static 'puesto/js/list.js' %}"></script>
+{% endblock %}
+
+{% block columns %}
+    <tr>
+        <th scope="col" style="width: 10%;">Nro</th>
+        <th scope="col" style="width: 20%;">Nombre</th>
+        <th scope="col" style="width: 10%;">Tipo de puesto</th>
+        <th scope="col" style="width: 10%;">Salario</th>
+        <th scope="col" style="width: 20%;">Área</th>
+        <th scope="col" style="width: 10%;">Horario</th>
+        <th scope="col" style="width: 10%;">Fecha de registro</th>
+        <th scope="col" style="width: 10%;">Opciones</th>
+    </tr>
+{% endblock %}
+
+{% block rows %}
+
+{% endblock %}
+
+{% block javascript %}
+
+{% endblock %}
