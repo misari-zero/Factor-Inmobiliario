@@ -3,11 +3,12 @@ from datetime import datetime
 
 # Create your models here.
 from django.forms import model_to_dict
+from config.settings import MEDIA_URL, STATIC_URL
+from core.models import BaseModel
 
 
 class Area(models.Model):
     name = models.CharField(max_length=150, verbose_name='Área')
-    descripcion = models.CharField(max_length=150, verbose_name='Descripción')
     turno = models.CharField(max_length=150, verbose_name='Turno')
     date_joined = models.DateField(default=datetime.now, verbose_name='Fecha de registro')
     date_creation = models.DateTimeField(auto_now=True)
@@ -39,6 +40,15 @@ class Puesto(models.Model):
 
     def __str__(self):
         return self.name
+
+    def toJSON(self):
+        item = model_to_dict(self)
+        item['name'] = self.name.toJSON()
+        item['type'] = self.type.toJSON()
+        item['salario'] = format(self.salario, '.2f')
+        item['area'] = self.type.toJSON()
+        item['horario'] = self.horario.toJSON()
+        return item
 
     class Meta:
         verbose_name = 'Puesto'

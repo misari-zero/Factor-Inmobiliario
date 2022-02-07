@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.forms import *
 
 from core.erp.models import Area, Puesto, Empleado
@@ -18,13 +20,6 @@ class AreaForm(ModelForm):
             'name': TextInput(
                 attrs={
                     'placeholder': 'Ingrese un nombre',
-                }
-            ),
-            'descripcion': Textarea(
-                attrs={
-                    'placeholder': 'Ingrese una descripción',
-                    'rows': 3,
-                    'cols': 3
                 }
             ),
         }

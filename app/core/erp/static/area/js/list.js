@@ -15,10 +15,9 @@ $(function () {
         columns: [
             {"data": "id"},
             {"data": "name"},
-            {"data": "descripcion"},
             {"data": "turno"},
             {"data": "date_joined"},
-            {"data": "descripcion"},
+            {"data": "id"},
         ],
         columnDefs: [
             {
