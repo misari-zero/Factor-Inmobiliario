@@ -17,15 +17,8 @@ $(function () {
             {"data": "names"},
             {"data": "apellidos"},
             {"data": "dni"},
-            {"data": "gender"},
-            {"data": "address"},
-            {"data": "cellphone"},
-            {"data": "email"},
-            {"data": "puesto"},
-            {"data": "area"},
-            {"data": "state"},
-            {"data": "date_entry"},
-            {"data": "date_joined"},
+            {"data": "puesto.name"},
+            {"data": "area.name"},
             {"data": "id"},
         ],
         columnDefs: [
@@ -34,7 +27,7 @@ $(function () {
                 class: 'text-center',
                 orderable: false,
                 render: function (data, type, row) {
-                    var buttons = '<a href="/erp/empleado/update/' + row.id + '/" class="btn btn-warning btn-xs btn-flat"><i class="fas fa-edit"></i></a>';
+                    let buttons = '<a href="/erp/empleado/update/' + row.id + '/" class="btn btn-warning btn-xs btn-flat"><i class="fas fa-edit"></i></a>';
                     buttons += '<a href="/erp/empleado/delete/' + row.id + '/" type="button" class="btn btn-danger btn-xs btn-flat"><i class="fas fa-trash-alt"></i></a>';
                     return buttons;
                 }

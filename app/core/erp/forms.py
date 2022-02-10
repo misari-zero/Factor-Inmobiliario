@@ -86,7 +86,7 @@ class EmpleadoForm(ModelForm):
                     'placeholder': 'Ingrese sus nombres',
                 }
             ),
-            'surnames': TextInput(
+            'apellidos': TextInput(
                 attrs={
                     'placeholder': 'Ingrese sus apellidos',
                 }
@@ -96,17 +96,6 @@ class EmpleadoForm(ModelForm):
                     'placeholder': 'Ingrese su dni',
                 }
             ),
-            'date_entry': DateInput(format='%Y-%m-%d',
-                                       attrs={
-                                           'value': datetime.now().strftime('%Y-%m-%d'),
-                                       }
-                                       ),
-            'address': TextInput(
-                attrs={
-                    'placeholder': 'Ingrese su dirección',
-                }
-            ),
-            # 'gender': Select()
         }
 
     def save(self, commit=True):

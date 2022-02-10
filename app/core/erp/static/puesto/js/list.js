@@ -16,10 +16,8 @@ $(function () {
             {"data": "id"},
             {"data": "name"},
             {"data": "type"},
-            {"data": "salario"},
-            {"data": "area"},
+            {"data": "area.name"},
             {"data": "horario"},
-            {"data": "date_joined"},
             {"data": "id"},
         ],
         columnDefs: [
@@ -28,7 +26,7 @@ $(function () {
                 class: 'text-center',
                 orderable: false,
                 render: function (data, type, row) {
-                    var buttons = '<a href="/erp/puesto/update/' + row.id + '/" class="btn btn-warning btn-xs btn-flat"><i class="fas fa-edit"></i></a>';
+                    let buttons = '<a href="/erp/puesto/update/' + row.id + '/" class="btn btn-warning btn-xs btn-flat"><i class="fas fa-edit"></i></a>';
                     buttons += '<a href="/erp/puesto/delete/' + row.id + '/" type="button" class="btn btn-danger btn-xs btn-flat"><i class="fas fa-trash-alt"></i></a>';
                     return buttons;
                 }

@@ -5,7 +5,7 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 
-from core.erp.forms import EmpleadoForm, PuestoForm
+from core.erp.forms import PuestoForm
 from core.erp.mixins import ValidatePermissionRequiredMixin
 from core.erp.models import Puesto
 
