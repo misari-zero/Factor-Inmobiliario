@@ -201,7 +201,7 @@ class Proyecto(models.Model):
     address = models.CharField(max_length=150, verbose_name='Dirección')
     departamento = models.ForeignKey(Departamento, on_delete=models.CASCADE, verbose_name='Departamento')
     provincia = models.ForeignKey(Provincia, on_delete=models.CASCADE, verbose_name='Provincia')
-    distrito = models.ForeignKey(Provincia, on_delete=models.CASCADE, verbose_name='Distrito')
+    distrito = models.ForeignKey(Distrito, on_delete=models.CASCADE, verbose_name='Distrito')
     date_joined = models.DateField(default=datetime.now, verbose_name='Fecha de registro')
     date_creation = models.DateTimeField(auto_now=True)
     date_uptated = models.DateTimeField(auto_now_add=True)

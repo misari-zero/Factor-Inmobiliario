@@ -1,0 +1,26 @@
+{% load static %}
+<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+    <li class="nav-item menu-open">
+        <a href="#" class="nav-link active">
+            <img src="#" width="30" height="30"/>
+            {#                        <img src="{% static 'img/icon_config.png' %}" width="30" height="30"/>#}
+            <p>
+                Ventas
+                <i class="fas fa-angle-left right"></i>
+            </p>
+        </a>
+        <ul class="nav nav-treeview">
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Reserva de cliente</p>
+                </a>
+            <li class="nav-item">
+                <a href="{% url 'erp:area_list' %}" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Reserva de visita</p>
+                </a>
+            </li>
+        </ul>
+    </li>
+</ul>
