@@ -14,10 +14,13 @@ $(function () {
         },
         columns: [
             {"data": "id"},
-            {"data": "name"},
-            {"data": "turno"},
-            {"data": "turno"},
-            {"data": "date_joined"},
+            {"data": "proyecto.name"},
+            {"data": "lider.names"},
+            {"data": "asesor.names"},
+            {"data": "asesor_ca.names"},
+            {"data": "cliente.names"},
+            {"data": "fecha"},
+            {"data": "hora"},
             {"data": "id"},
         ],
         columnDefs: [
@@ -26,8 +29,8 @@ $(function () {
                 class: 'text-center',
                 orderable: false,
                 render: function (data, type, row) {
-                    var buttons = '<a href="/erp/area/update/' + row.id + '/" class="btn btn-warning btn-xs btn-flat"><i class="fas fa-edit"></i></a> ';
-                    buttons += '<a href="/erp/area/delete/' + row.id + '/" type="button" class="btn btn-danger btn-xs btn-flat"><i class="fas fa-trash-alt"></i></a>';
+                    let buttons = '<a href="/erp/agenda/update/' + row.id + '/" class="btn btn-warning btn-xs btn-flat"><i class="fas fa-edit"></i></a>';
+                    buttons += '<a href="/erp/agenda/delete/' + row.id + '/" type="button" class="btn btn-danger btn-xs btn-flat"><i class="fas fa-trash-alt"></i></a>';
                     return buttons;
                 }
             },

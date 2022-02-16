@@ -2,23 +2,18 @@
 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
     <li class="nav-item menu-open">
         <a href="#" class="nav-link active">
-            <img src="#" width="30" height="30"/>
+            <img src="{% static 'img/icon_person.png' %}" width="30" height="30"/>
             {#                        <img src="{% static 'img/icon_config.png' %}" width="30" height="30"/>#}
             <p>
-                Reserva
+                Clientes
                 <i class="fas fa-angle-left right"></i>
             </p>
         </a>
         <ul class="nav nav-treeview">
             <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="{% url 'erp:cliente_list' %}" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
-                    <p>Reserva de cliente</p>
-                </a>
-            <li class="nav-item">
-                <a href="{% url 'erp:area_list' %}" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Reserva de visita</p>
+                    <p>Clientes</p>
                 </a>
             </li>
         </ul>

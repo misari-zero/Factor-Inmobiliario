@@ -1,0 +1,23 @@
+{% extends 'list.html' %}
+{% load static %}
+{% block head_list %}
+    <script src="{% static 'agenda/js/list.js' %}"></script>
+{% endblock %}
+
+{% block columns %}
+    <tr>
+        <th scope="col" style="width: 5%;">Nro</th>
+        <th scope="col" style="width: 15%;">Proyecto</th>
+        <th scope="col" style="width: 15%;">Líder</th>
+        <th scope="col" style="width: 15%;">Asesor</th>
+        <th scope="col" style="width: 10%;">Asesor Campo</th>
+        <th scope="col" style="width: 10%;">Cliente</th>
+        <th scope="col" style="width: 10%;">Fecha</th>
+        <th scope="col" style="width: 10%;">Hora</th>
+        <th scope="col" style="width: 10%;">Opciones</th>
+    </tr>
+{% endblock %}
+
+{% block javascript %}
+
+{% endblock %}

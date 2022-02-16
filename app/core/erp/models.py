@@ -4,7 +4,7 @@ from datetime import datetime
 # Create your models here.
 from django.forms import model_to_dict
 from config.settings import MEDIA_URL, STATIC_URL
-from core.erp.choices import gender_choices
+from core.erp.choices import gender_choices, hora_choices, type_proyecto_choices
 from core.models import BaseModel
 
 
@@ -79,6 +79,7 @@ class Departamento(models.Model):
 
 class Provincia(models.Model):
     name = models.CharField(max_length=150, verbose_name='Nombre')
+    departamento = models.ForeignKey(Departamento, on_delete=models.CASCADE, verbose_name='Departamento')
     date_joined = models.DateField(default=datetime.now, verbose_name='Fecha de registro')
     date_creation = models.DateTimeField(auto_now=True)
     date_uptated = models.DateTimeField(auto_now_add=True)
@@ -88,6 +89,7 @@ class Provincia(models.Model):
 
     def toJSON(self):
         item = model_to_dict(self)
+        item['departamento'] = self.departamento.toJSON()
         item['date_joined'] = self.date_joined.strftime('%Y-%m-%d')
         return item
 
@@ -100,6 +102,8 @@ class Provincia(models.Model):
 
 class Distrito(models.Model):
     name = models.CharField(max_length=150, verbose_name='Nombre')
+    departamento = models.ForeignKey(Departamento, on_delete=models.CASCADE, verbose_name='Departamento')
+    provincia = models.ForeignKey(Provincia, on_delete=models.CASCADE, verbose_name='Provincia')
     date_joined = models.DateField(default=datetime.now, verbose_name='Fecha de registro')
     date_creation = models.DateTimeField(auto_now=True)
     date_uptated = models.DateTimeField(auto_now_add=True)
@@ -109,6 +113,8 @@ class Distrito(models.Model):
 
     def toJSON(self):
         item = model_to_dict(self)
+        item['departamento'] = self.departamento.toJSON()
+        item['provincia'] = self.provincia.toJSON()
         item['date_joined'] = self.date_joined.strftime('%Y-%m-%d')
         return item
 
@@ -159,7 +165,7 @@ class Cliente(models.Model):
     names = models.CharField(max_length=150, verbose_name='Nombres')
     fullname = models.CharField(max_length=150, verbose_name='Apellidos')
     dni = models.CharField(max_length=8, verbose_name='Dni')
-    age = models.PositiveSmallIntegerField(default=0)
+    age = models.PositiveSmallIntegerField(default=0, verbose_name='Edad')
     gender = models.CharField(max_length=10, choices=gender_choices, default='male', verbose_name='Sexo')
     state_civil = models.CharField(max_length=50, verbose_name='Estado Civil')
     date_birth = models.DateField(verbose_name='Fecha de nacimiento')
@@ -197,17 +203,18 @@ class Cliente(models.Model):
 class Proyecto(models.Model):
     name = models.CharField(max_length=150, verbose_name='Nombre')
     description = models.CharField(max_length=150, verbose_name='Descripción')
-    total_lote = models.IntegerField(verbose_name='Total de lotes')
+    total_lote = models.IntegerField(default=0, verbose_name='Total de lotes')
     address = models.CharField(max_length=150, verbose_name='Dirección')
     departamento = models.ForeignKey(Departamento, on_delete=models.CASCADE, verbose_name='Departamento')
     provincia = models.ForeignKey(Provincia, on_delete=models.CASCADE, verbose_name='Provincia')
     distrito = models.ForeignKey(Distrito, on_delete=models.CASCADE, verbose_name='Distrito')
+    type = models.CharField(max_length=10, choices=type_proyecto_choices, verbose_name='Tipo de proyecto')
     date_joined = models.DateField(default=datetime.now, verbose_name='Fecha de registro')
     date_creation = models.DateTimeField(auto_now=True)
     date_uptated = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.name
+        return str(self.name)
 
     def toJSON(self):
         item = model_to_dict(self)
@@ -228,7 +235,7 @@ class Plano(models.Model):
     proyecto = models.ForeignKey(Proyecto, on_delete=models.CASCADE)
     mz = models.CharField(max_length=3, verbose_name='Mz')
     lote = models.PositiveSmallIntegerField()
-    state = models.BooleanField()
+    state = models.BooleanField(default=True, verbose_name='Estado')
     date_joined = models.DateField(default=datetime.now, verbose_name='Fecha de registro')
     date_creation = models.DateTimeField(auto_now=True)
     date_uptated = models.DateTimeField(auto_now=True)
@@ -249,10 +256,16 @@ class Plano(models.Model):
         ordering = ['id']
 
 
-class Visita(models.Model):
+class Agenda(models.Model):
     proyecto = models.ForeignKey(Proyecto, on_delete=models.CASCADE)
-    empleado = models.ForeignKey(Empleado, on_delete=models.CASCADE)
+    lider = models.ForeignKey(Empleado, on_delete=models.CASCADE, related_name='empleado_lider', verbose_name='Líder')
+    asesor = models.ForeignKey(Empleado, on_delete=models.CASCADE, related_name='empleado_asesor',
+                               verbose_name='Asesor')
+    asesor_ca = models.ForeignKey(Empleado, on_delete=models.CASCADE, related_name='empleado_asesor_ca',
+                                  verbose_name='Asesor Campo')
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
+    fecha = models.DateField(default=datetime.now, verbose_name='Fecha Agendada')
+    hora = models.CharField(max_length=10, choices=hora_choices, default='11:00am', verbose_name='Hora')
     date_joined = models.DateField(default=datetime.now, verbose_name='Fecha de registro')
     date_creation = models.DateTimeField(auto_now=True)
     date_uptated = models.DateTimeField(auto_now_add=True)
@@ -263,18 +276,23 @@ class Visita(models.Model):
     def toJSON(self):
         item = model_to_dict(self)
         item['proyecto'] = self.proyecto.toJSON()
+        item['lider'] = self.lider.toJSON()
+        item['asesor'] = self.asesor.toJSON()
+        item['asesor_ca'] = self.asesor_ca.toJSON()
+        item['cliente'] = self.cliente.toJSON()
+        item['fecha'] = self.fecha.strftime('%Y-%m-%d')
         item['date_joined'] = self.date_joined.strftime('%Y-%m-%d')
         return item
 
     class Meta:
-        verbose_name = 'Visita'
-        verbose_name_plural = 'Visitas'
-        db_table = 'visita'
+        verbose_name = 'Agenda'
+        verbose_name_plural = 'Agendas'
+        db_table = 'agenda'
         ordering = ['id']
 
 
 class Reserva(models.Model):
-    cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
+    cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE, verbose_name='Cliente')
     monto = models.DecimalField(max_digits=3, decimal_places=2, verbose_name='Monto')
     proyecto = models.ForeignKey(Proyecto, on_delete=models.CASCADE)
     plano = models.ForeignKey(Plano, on_delete=models.CASCADE)
@@ -300,6 +318,6 @@ class Reserva(models.Model):
 
     class Meta:
         verbose_name = 'Reserva'
-        verbose_name_plural = 'Reserva'
+        verbose_name_plural = 'Reservas'
         db_table = 'reserva'
         ordering = ['id']

@@ -15,8 +15,6 @@ $(function () {
         columns: [
             {"data": "id"},
             {"data": "name"},
-            {"data": "turno"},
-            {"data": "turno"},
             {"data": "date_joined"},
             {"data": "id"},
         ],
@@ -26,8 +24,8 @@ $(function () {
                 class: 'text-center',
                 orderable: false,
                 render: function (data, type, row) {
-                    var buttons = '<a href="/erp/area/update/' + row.id + '/" class="btn btn-warning btn-xs btn-flat"><i class="fas fa-edit"></i></a> ';
-                    buttons += '<a href="/erp/area/delete/' + row.id + '/" type="button" class="btn btn-danger btn-xs btn-flat"><i class="fas fa-trash-alt"></i></a>';
+                    let buttons = '<a href="/erp/departamento/update/' + row.id + '/" class="btn btn-warning btn-xs btn-flat"><i class="fas fa-edit"></i></a>';
+                    buttons += '<a href="/erp/departamento/delete/' + row.id + '/" type="button" class="btn btn-danger btn-xs btn-flat"><i class="fas fa-trash-alt"></i></a>';
                     return buttons;
                 }
             },

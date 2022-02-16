@@ -3,6 +3,16 @@ gender_choices = (
     ('female', 'Femenino'),
 )
 
+hora_choices = (
+    ('11:00am', '11:00am'),
+    ('12:00pm', '12:00pm'),
+)
+
+type_proyecto_choices = (
+    ('propio', 'Propio'),
+    ('externo', 'Externo'),
+)
+
 departamento_choices = (
     ('amazonas', 'Amazonas'),
     ('ancash', 'Áncash'),
