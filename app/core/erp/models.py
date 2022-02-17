@@ -4,7 +4,7 @@ from datetime import datetime
 # Create your models here.
 from django.forms import model_to_dict
 from config.settings import MEDIA_URL, STATIC_URL
-from core.erp.choices import gender_choices, hora_choices, type_proyecto_choices
+from core.erp.choices import gender_choices, hora_choices, type_proyecto_choices, interes_choices
 from core.models import BaseModel
 
 
@@ -129,7 +129,7 @@ class Empleado(models.Model):
     names = models.CharField(max_length=150, verbose_name='Nombres')
     apellidos = models.CharField(max_length=150, verbose_name='Apellidos')
     dni = models.CharField(max_length=8, verbose_name='Dni', unique=True)
-    age = models.PositiveSmallIntegerField(default=0)
+    age = models.PositiveSmallIntegerField(default=0, verbose_name='Edad')
     gender = models.CharField(max_length=10, choices=gender_choices, default='male', verbose_name='Sexo')
     address = models.CharField(max_length=150, verbose_name='Dirección')
     cellphone = models.CharField(max_length=9, verbose_name='Celular')
@@ -139,7 +139,7 @@ class Empleado(models.Model):
     departamento = models.ForeignKey(Departamento, on_delete=models.CASCADE, verbose_name='Departamento')
     provincia = models.ForeignKey(Provincia, on_delete=models.CASCADE, verbose_name='Provincia')
     distrito = models.ForeignKey(Distrito, on_delete=models.CASCADE, verbose_name='Distrito')
-    state = models.BooleanField(default=True)
+    state = models.BooleanField(default=True, verbose_name='Estado')
     date_entry = models.DateField(default=datetime.now, verbose_name='Fecha de entrada')
     date_joined = models.DateField(default=datetime.now, verbose_name='Fecha de registro')
     date_creation = models.DateTimeField(auto_now=True)
@@ -151,6 +151,11 @@ class Empleado(models.Model):
     def toJSON(self):
         item = model_to_dict(self)
         item['gender'] = {'id': self.gender, 'name': self.get_gender_display()}
+        item['puesto'] = self.puesto.toJSON()
+        item['area'] = self.area.toJSON()
+        item['departamento'] = self.departamento.toJSON()
+        item['provincia'] = self.provincia.toJSON()
+        item['distrito'] = self.distrito.toJSON()
         item['date_joined'] = self.date_joined.strftime('%Y-%m-%d')
         return item
 
@@ -305,7 +310,7 @@ class Reserva(models.Model):
     date_uptated = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.cliente
+        return self.cliente.names
 
     def toJSON(self):
         item = model_to_dict(self)
@@ -320,4 +325,37 @@ class Reserva(models.Model):
         verbose_name = 'Reserva'
         verbose_name_plural = 'Reservas'
         db_table = 'reserva'
+        ordering = ['id']
+
+
+class Pago(models.Model):
+    cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE, verbose_name='Cliente')
+    proyecto = models.ForeignKey(Proyecto, on_delete=models.CASCADE, verbose_name='Proyecto')
+    precio = models.DecimalField(default=0.00, max_digits=10, decimal_places=2, verbose_name='Precio')
+    inicial = models.DecimalField(default=0.00, max_digits=10, decimal_places=2, verbose_name='Inicial')
+    monto_frac = models.DecimalField(default=0.00, max_digits=10, decimal_places=2, verbose_name='Monto Fraccionado')
+    cuota = models.IntegerField(default=0, verbose_name='Nro Cuota')
+    plazo = models.CharField(max_length=10, verbose_name='Plazo')
+    interes = models.CharField(max_length=20, choices=interes_choices, default='SIN INTERES', verbose_name='Interés')
+    date_joined = models.DateField(default=datetime.now, verbose_name='Fecha de registro')
+    date_creation = models.DateTimeField(auto_now=True)
+    date_uptated = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.cliente.names
+
+    def toJSON(self):
+        item = model_to_dict(self)
+        item['cliente'] = self.cliente.toJSON()
+        item['proyecto'] = self.proyecto.toJSON()
+        item['precio'] = format(self.precio, '.2f')
+        item['inicial'] = format(self.inicial, '.2f')
+        item['monto_frac'] = format(self.monto_frac, '.2f')
+        item['interes'] = {'id': self.interes, 'name': self.get_interes_display()}
+        item['date_joined'] = self.date_joined.strftime('%Y-%m-%d')
+
+    class Meta:
+        verbose_name = 'Pago'
+        verbose_name_plural = 'Pagos'
+        db_table = 'pago'
         ordering = ['id']

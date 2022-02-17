@@ -13,6 +13,11 @@ type_proyecto_choices = (
     ('externo', 'Externo'),
 )
 
+interes_choices = (
+    ('SIN INTERES', 'SIN INTERES'),
+    ('CON INTERES', 'CON INTERES'),
+)
+
 departamento_choices = (
     ('amazonas', 'Amazonas'),
     ('ancash', 'Áncash'),

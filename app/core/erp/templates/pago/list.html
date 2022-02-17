@@ -1,0 +1,21 @@
+{% extends 'list.html' %}
+{% load static %}
+{% block head_list %}
+    <script src="{% static 'pago/js/list.js' %}"></script>
+{% endblock %}
+
+{% block columns %}
+    <tr>
+        <th scope="col" style="width: 5%;">Nro</th>
+        <th scope="col" style="width: 15%;">Cliente</th>
+        <th scope="col" style="width: 15%;">Proyecto</th>
+        <th scope="col" style="width: 15%;">Precio</th>
+        <th scope="col" style="width: 10%;">Inicial</th>
+        <th scope="col" style="width: 10%;">Monto Fraccionado</th>
+        <th scope="col" style="width: 10%;">Opciones</th>
+    </tr>
+{% endblock %}
+
+{% block javascript %}
+
+{% endblock %}

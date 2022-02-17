@@ -399,3 +399,42 @@ class AgendaForm(ModelForm):
         except Exception as e:
             data['error'] = str(e)
         return data
+
+
+class PagoForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['cliente'].widget.attrs['autofocus'] = True
+
+    class Meta:
+        model = Pago
+        fields = '__all__'
+        # widgets = {
+        #     'names': TextInput(
+        #         attrs={
+        #             'placeholder': 'Ingrese sus nombres',
+        #         }
+        #     ),
+        #     'fullname': TextInput(
+        #         attrs={
+        #             'placeholder': 'Ingrese sus apellidos',
+        #         }
+        #     ),
+        #     'dni': TextInput(
+        #         attrs={
+        #             'placeholder': 'Ingrese su dni',
+        #         }
+        #     ),
+        # }
+
+    def save(self, commit=True):
+        data = {}
+        form = super()
+        try:
+            if form.is_valid():
+                form.save()
+            else:
+                data['error'] = form.errors
+        except Exception as e:
+            data['error'] = str(e)
+        return data

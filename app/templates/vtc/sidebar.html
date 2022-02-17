@@ -22,6 +22,14 @@
             {% include 'vtc/agenda.html' %}
             {% include 'vtc/venta.html' %}
             {% include 'vtc/config.html' %}
+            <li class="nav-item">
+                <a href="{% url 'cliente_report' %}" class="nav-link">
+                    <i class="nav-icon fas fa-chart-bar"></i>
+                    <p>
+                        Reporte de Ventas
+                    </p>
+                </a>
+            </li>
         </nav>
     </div>
 </aside>

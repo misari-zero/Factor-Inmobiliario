@@ -6,6 +6,7 @@ from core.erp.views.cliente.views import *
 from core.erp.views.dashboard.views import *
 from core.erp.views.departamento.views import *
 from core.erp.views.distrito.views import *
+from core.erp.views.pago.views import *
 from core.erp.views.plano.views import *
 from core.erp.views.provincia.views import *
 from core.erp.views.proyecto.views import *
@@ -71,6 +72,11 @@ urlpatterns = [
     path('agenda/add/', AgendaCreateView.as_view(), name='agenda_create'),
     path('agenda/update/<int:pk>/', AgendaUpdateView.as_view(), name='agenda_update'),
     path('agenda/delete/<int:pk>/', AgendaDeleteView.as_view(), name='agenda_delete'),
+    # Pago
+    path('pago/list/', PagoListView.as_view(), name='pago_list'),
+    path('pago/add/', PagoCreateView.as_view(), name='pago_create'),
+    path('pago/update/<int:pk>/', PagoUpdateView.as_view(), name='pago_update'),
+    path('pago/delete/<int:pk>/', PagoDeleteView.as_view(), name='pago_delete'),
     # home
     path('dashboard/', DashboardView.as_view(), name='dashboard'),
 ]
