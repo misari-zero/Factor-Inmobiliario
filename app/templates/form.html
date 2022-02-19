@@ -60,8 +60,8 @@
         {% endif %}
 
         $('form').on('submit', function (e) {
-            e.preventDefault();
-            var parameters = $(this).serializeArray();
+            e.preventDefault();  {# Esta función no permite que se envíe de forma automatica el evento, sólo se hace una pausa #}
+            var parameters = $(this).serializeArray(); {# Permite obenter todos los datos del formulario en forma de diccionario #}
             $.ajax({
                 url: window.location.pathname,
                 type: 'POST',

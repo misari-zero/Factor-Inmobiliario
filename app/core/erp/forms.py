@@ -8,6 +8,7 @@ from core.erp.models import *
 class AreaForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        # Para no repetir en los widgets el mismo atributo se puede realizar de la siguiente manera
         # for form in self.visible_fields():
         #     form.field.widget.attrs['class'] = 'form-control'
         #     form.field.widget.attrs['autocomplete'] = 'off'
@@ -20,6 +21,7 @@ class AreaForm(ModelForm):
             'name': TextInput(
                 attrs={
                     'placeholder': 'Ingrese un nombre',
+                    'autocomplete': 'off',
                 }
             ),
         }

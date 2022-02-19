@@ -1,9 +1,9 @@
 $(function () {
     $('#data').DataTable({
-        responsive: true,
-        autoWidth: false,
-        destroy: true,
-        deferRender: true,
+        responsive: true, // Se ajusten os datos
+        autoWidth: false,  // Se respetan los anchos que se colocan
+        destroy: true,  // Permite reinicializar la tabla con otro proceso
+        deferRender: true,  // Permite agilizar la carga de más de 50 0000 filas
         ajax: {
             url: window.location.pathname,
             type: 'POST',
