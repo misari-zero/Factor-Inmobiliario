@@ -4,7 +4,7 @@ from datetime import datetime
 # Create your models here.
 from django.forms import model_to_dict
 from config.settings import MEDIA_URL, STATIC_URL
-from core.erp.choices import gender_choices, hora_choices, type_proyecto_choices, interes_choices
+from core.erp.choices import gender_choices, hora_choices, type_proyecto_choices, interes_choices, estadopre_choices
 from core.models import BaseModel
 
 
@@ -358,4 +358,35 @@ class Pago(models.Model):
         verbose_name = 'Pago'
         verbose_name_plural = 'Pagos'
         db_table = 'pago'
+        ordering = ['id']
+
+
+class Inventario(models.Model):
+    proyecto = models.ForeignKey(Proyecto, on_delete=models.CASCADE, verbose_name='Proyecto')
+    mz = models.ForeignKey(Plano, on_delete=models.CASCADE, verbose_name='Mz')
+    area = models.ForeignKey(Plano, on_delete=models.CASCADE, verbose_name='Lote')
+    metro = models.DecimalField(max_digits=10, decimal_places=4, verbose_name='Mtr2')
+    metro_prom = models.IntegerField(verbose_name='Mtr2 Promedio')
+    pre_contado = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, verbose_name='Precio Contado')
+    pre_financiado = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, verbose_name='Precio Contado')
+    state = models.CharField(max_length=20, choices=estadopre_choices, default='PENDIENTE', verbose_name='Estado')
+    date_joined = models.DateField(default=datetime.now, verbose_name='Fecha de registro')
+    date_creation = models.DateTimeField(auto_now=True)
+    date_uptated = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.proyecto
+
+    def toJSON(self):
+        item = model_to_dict(self)
+        item['proyecto'] = self.proyecto.toJSON()
+        item['mz'] = self.mz.toJSON()
+        item['area'] = self.area.toJSON()
+        item['metro'] = self.metro.toJSON()
+        item['metro_prom'] = self.metro_prom.toJSON()
+
+    class Meta:
+        verbose_name = 'Inventario'
+        verbose_name_plural = 'Inventarios'
+        db_table = 'inventario'
         ordering = ['id']

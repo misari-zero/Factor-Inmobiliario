@@ -18,6 +18,12 @@ interes_choices = (
     ('CON INTERES', 'CON INTERES'),
 )
 
+estadopre_choices = (
+    ('Pagado', 'PAGADO'),
+    ('Pendiente', 'PENDIENTE'),
+)
+
+
 departamento_choices = (
     ('amazonas', 'Amazonas'),
     ('ancash', 'Áncash'),

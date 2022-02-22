@@ -1,3 +1,17 @@
 body {
-    background: #0c525d;
+    background: DodgerBlue;
+}
+
+.flex-container {
+    display: flex;
+    margin: 0;
+}
+
+.flex-container > div {
+    background-color: #f1f1f1;
+}
+
+.flex-container-segundo {
+    background-color: #f1f1f1;
+    margin-left: 20px;
 }
