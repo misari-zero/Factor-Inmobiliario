@@ -59,3 +59,53 @@ class ReportClienteView(TemplateView):
         context['list_url'] = reverse_lazy('cliente_report')
         context['form'] = ReportForm()
         return context
+
+
+class ReportProyectoView(TemplateView):
+    template_name = 'proyecto/report.html'
+
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        data = {}
+        try:
+            action = request.POST['action']
+            if action == 'search_report':
+                data = []
+                start_date = request.POST.get('start_date', '')
+                end_date = request.POST.get('end_date', '')
+                search = Cliente.objects.all()
+                if len(start_date) and len(end_date):
+                    search = search.filter(date_joined__range=[start_date, end_date])
+                for s in search:
+                    data.append([
+                        s.id,
+                        s.name,
+                        s.provincia.name,
+                        s.departamento.name,
+                        s.type,
+                        s.date_joined.strftime('%Y-%m-%d'),
+                    ])
+                # data.append([
+                #     '---',
+                #     '---',
+                #     '---',
+                #     format(subtotal, '.2f'),
+                #     format(iva, '.2f'),
+                #     format(total, '.2f'),
+                # ])
+            else:
+                data['error'] = 'Ha ocurrido un error'
+        except Exception as e:
+            data['error'] = str(e)
+        return JsonResponse(data, safe=False)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Reporte de Proyectos'
+        context['entity'] = 'Proyectos'
+        context['list_url'] = reverse_lazy('proyecto_report')
+        context['form'] = ReportForm()
+        return context

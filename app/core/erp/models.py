@@ -363,12 +363,12 @@ class Pago(models.Model):
 
 class Inventario(models.Model):
     proyecto = models.ForeignKey(Proyecto, on_delete=models.CASCADE, verbose_name='Proyecto')
-    mz = models.ForeignKey(Plano, on_delete=models.CASCADE, verbose_name='Mz')
-    area = models.ForeignKey(Plano, on_delete=models.CASCADE, verbose_name='Lote')
+    mz = models.ForeignKey(Plano, on_delete=models.CASCADE, related_name='plano_mz', verbose_name='Mz')
+    lote = models.ForeignKey(Plano, on_delete=models.CASCADE, related_name='plano_lote', verbose_name='Lote')
     metro = models.DecimalField(max_digits=10, decimal_places=4, verbose_name='Mtr2')
     metro_prom = models.IntegerField(verbose_name='Mtr2 Promedio')
     pre_contado = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, verbose_name='Precio Contado')
-    pre_financiado = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, verbose_name='Precio Contado')
+    pre_financiado = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, verbose_name='Precio Financiado')
     state = models.CharField(max_length=20, choices=estadopre_choices, default='PENDIENTE', verbose_name='Estado')
     date_joined = models.DateField(default=datetime.now, verbose_name='Fecha de registro')
     date_creation = models.DateTimeField(auto_now=True)
@@ -381,9 +381,13 @@ class Inventario(models.Model):
         item = model_to_dict(self)
         item['proyecto'] = self.proyecto.toJSON()
         item['mz'] = self.mz.toJSON()
-        item['area'] = self.area.toJSON()
+        item['lote'] = self.lote.toJSON()
         item['metro'] = self.metro.toJSON()
         item['metro_prom'] = self.metro_prom.toJSON()
+        item['pre_contado'] = format(self.pre_contado, '.2f')
+        item['pre_financiado'] = format(self.pre_financiado, '.2f')
+        item['state'] = {'id': self.state, 'name': self.get_state_display()}
+        item['date_joined'] = self.date_joined.strftime('%Y-%m-%d')
 
     class Meta:
         verbose_name = 'Inventario'

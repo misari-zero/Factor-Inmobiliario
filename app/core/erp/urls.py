@@ -6,6 +6,7 @@ from core.erp.views.cliente.views import *
 from core.erp.views.dashboard.views import *
 from core.erp.views.departamento.views import *
 from core.erp.views.distrito.views import *
+from core.erp.views.inventario.views import *
 from core.erp.views.pago.views import *
 from core.erp.views.plano.views import *
 from core.erp.views.provincia.views import *
@@ -77,6 +78,11 @@ urlpatterns = [
     path('pago/add/', PagoCreateView.as_view(), name='pago_create'),
     path('pago/update/<int:pk>/', PagoUpdateView.as_view(), name='pago_update'),
     path('pago/delete/<int:pk>/', PagoDeleteView.as_view(), name='pago_delete'),
+    # Inventario
+    path('inventario/list/', InventarioListView.as_view(), name='inventario_list'),
+    path('inventario/add/', InventarioCreateView.as_view(), name='inventario_create'),
+    path('inventario/update/<int:pk>/', InventarioUpdateView.as_view(), name='inventario_update'),
+    path('inventario/delete/<int:pk>/', InventarioDeleteView.as_view(), name='inventario_delete'),
     # home
     path('dashboard/', DashboardView.as_view(), name='dashboard'),
 ]

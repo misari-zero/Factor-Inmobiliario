@@ -47,5 +47,5 @@ class LogoutView(RedirectView):
     pattern_name = 'login'
 
     def dispatch(self, request, *args, **kwargs):
-        logout(request)
+        logout(request)  # Permite cerrar sesion
         return super().dispatch(request, *args, **kwargs)

@@ -23,7 +23,6 @@ estadopre_choices = (
     ('Pendiente', 'PENDIENTE'),
 )
 
-
 departamento_choices = (
     ('amazonas', 'Amazonas'),
     ('ancash', 'Áncash'),

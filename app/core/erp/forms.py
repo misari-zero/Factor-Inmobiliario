@@ -75,6 +75,11 @@ class PuestoForm(ModelForm):
 
 
 class DepartamentoForm(ModelForm):
+    departamento = ModelChoiceField(queryset=Departamento.objects.all(), widget=Select(attrs={
+        'class': 'form-control select2',
+        'style': 'width: 100%'
+    }))
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         # for form in self.visible_fields():
@@ -124,6 +129,11 @@ class ProvinciaForm(ModelForm):
                 }
             ),
         }
+
+    provincia = ModelChoiceField(queryset=Provincia.objects.none(), widget=Select(attrs={
+        'class': 'form-control select2',
+        'style': 'width: 100%'
+    }))
 
     def save(self, commit=True):
         data = {}
@@ -410,6 +420,45 @@ class PagoForm(ModelForm):
 
     class Meta:
         model = Pago
+        fields = '__all__'
+        # widgets = {
+        #     'names': TextInput(
+        #         attrs={
+        #             'placeholder': 'Ingrese sus nombres',
+        #         }
+        #     ),
+        #     'fullname': TextInput(
+        #         attrs={
+        #             'placeholder': 'Ingrese sus apellidos',
+        #         }
+        #     ),
+        #     'dni': TextInput(
+        #         attrs={
+        #             'placeholder': 'Ingrese su dni',
+        #         }
+        #     ),
+        # }
+
+    def save(self, commit=True):
+        data = {}
+        form = super()
+        try:
+            if form.is_valid():
+                form.save()
+            else:
+                data['error'] = form.errors
+        except Exception as e:
+            data['error'] = str(e)
+        return data
+
+
+class InventarioForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['proyecto'].widget.attrs['autofocus'] = True
+
+    class Meta:
+        model = Inventario
         fields = '__all__'
         # widgets = {
         #     'names': TextInput(
