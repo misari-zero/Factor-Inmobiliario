@@ -250,6 +250,14 @@ class ClienteForm(ModelForm):
                     'placeholder': 'Ingrese su dni',
                 }
             ),
+            'state_civil': Select(),
+
+            'date_birth': DateInput(format='%Y-%m-%d',
+                                    attrs={
+                                        'value': datetime.now().strftime('%Y-%m-%d'),
+                                    }
+                                    ),
+
         }
 
     def save(self, commit=True):
@@ -438,6 +446,47 @@ class PagoForm(ModelForm):
         #         }
         #     ),
         # }
+
+    def save(self, commit=True):
+        data = {}
+        form = super()
+        try:
+            if form.is_valid():
+                form.save()
+            else:
+                data['error'] = form.errors
+        except Exception as e:
+            data['error'] = str(e)
+        return data
+
+
+class DetpagoForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['cuota'].widget.attrs['autofocus'] = True
+
+    class Meta:
+        model = Detpago
+        fields = '__all__'
+        widgets = {
+            'cuota': TextInput(
+                attrs={
+                    'placeholder': 'Ingrese el número de cuota',
+                }
+            ),
+            'date_pago': DateInput(format='%Y-%m-%d',
+                                   attrs={
+                                       'value': datetime.now().strftime('%Y-%m-%d'),
+                                   }
+                                   ),
+            'date_joined': DateInput(format='%Y-%m-%d',
+                                     attrs={
+                                         'value': datetime.now().strftime('%Y-%m-%d'),
+                                     }
+                                     ),
+            'state': Select()
+        }
+        exclude = ['user_updated', 'user_creation']
 
     def save(self, commit=True):
         data = {}

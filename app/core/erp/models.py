@@ -4,7 +4,8 @@ from datetime import datetime
 # Create your models here.
 from django.forms import model_to_dict
 from config.settings import MEDIA_URL, STATIC_URL
-from core.erp.choices import gender_choices, hora_choices, type_proyecto_choices, interes_choices, estadopre_choices
+from core.erp.choices import gender_choices, hora_choices, type_proyecto_choices, interes_choices, estadopre_choices, \
+    estadocivil_choices
 from core.models import BaseModel
 
 
@@ -172,7 +173,7 @@ class Cliente(models.Model):
     dni = models.CharField(max_length=8, verbose_name='Dni')
     age = models.PositiveSmallIntegerField(default=0, verbose_name='Edad')
     gender = models.CharField(max_length=10, choices=gender_choices, default='male', verbose_name='Sexo')
-    state_civil = models.CharField(max_length=50, verbose_name='Estado Civil')
+    state_civil = models.CharField(max_length=50, choices=estadocivil_choices, verbose_name='Estado Civil')
     date_birth = models.DateField(verbose_name='Fecha de nacimiento')
     address = models.CharField(max_length=150, verbose_name='Dirección')
     departamento = models.ForeignKey(Departamento, on_delete=models.CASCADE, verbose_name='Departamento')
@@ -192,6 +193,7 @@ class Cliente(models.Model):
         item = model_to_dict(self)
         item['gender'] = {'id': self.gender, 'name': self.get_gender_display()}
         item['date_birth'] = self.date_joined.strftime('%Y-%m-%d')
+        item['state_civil'] = {'id': self.state_civil, 'name': self.get_state_civil_display()}
         item['departamento'] = self.departamento.toJSON()
         item['provincia'] = self.provincia.toJSON()
         item['distrito'] = self.distrito.toJSON()
@@ -361,6 +363,32 @@ class Pago(models.Model):
         ordering = ['id']
 
 
+class Detpago(models.Model):
+    cuota = models.IntegerField(verbose_name='Nro Couta')
+    date_pago = models.DateField(default=datetime.now, verbose_name='Fecha de Pago')
+    monto = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, verbose_name='Monto')
+    saldo = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, verbose_name='Saldo')
+    state = models.CharField(max_length=20, choices=estadopre_choices, default='PENDIENTE', verbose_name='Estado')
+    date_joined = models.DateField(default=datetime.now, verbose_name='Fecha de Registro')
+
+    def __str__(self):
+        return self.cuota
+
+    def toJSON(self):
+        item = model_to_dict(self)
+        item['date_pago'] = self.date_pago.strftime('%Y-%m-%d')
+        item['monto'] = format(self.monto, '.2f')
+        item['saldo'] = format(self.saldo, '.2f')
+        item['state'] = {'id': self.state, 'name': self.get_state_display()}
+        item['date_joined'] = self.date_joined.strftime('%Y-%m-%d')
+
+    class Meta:
+        verbose_name = 'Detallepago'
+        verbose_name_plural = 'DetallePagos'
+        db_table = 'detpago'
+        ordering = ['id']
+
+
 class Inventario(models.Model):
     proyecto = models.ForeignKey(Proyecto, on_delete=models.CASCADE, verbose_name='Proyecto')
     mz = models.ForeignKey(Plano, on_delete=models.CASCADE, related_name='plano_mz', verbose_name='Mz')
@@ -368,7 +396,8 @@ class Inventario(models.Model):
     metro = models.DecimalField(max_digits=10, decimal_places=4, verbose_name='Mtr2')
     metro_prom = models.IntegerField(verbose_name='Mtr2 Promedio')
     pre_contado = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, verbose_name='Precio Contado')
-    pre_financiado = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, verbose_name='Precio Financiado')
+    pre_financiado = models.DecimalField(max_digits=10, decimal_places=2, default=0.00,
+                                         verbose_name='Precio Financiado')
     state = models.CharField(max_length=20, choices=estadopre_choices, default='PENDIENTE', verbose_name='Estado')
     date_joined = models.DateField(default=datetime.now, verbose_name='Fecha de registro')
     date_creation = models.DateTimeField(auto_now=True)

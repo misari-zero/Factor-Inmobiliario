@@ -3,17 +3,17 @@ from django.http import JsonResponse
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView, TemplateView
+from django.views.generic import TemplateView, CreateView, ListView, UpdateView, DeleteView
 
-from core.erp.forms import DetpagoForm, PagoForm
+from core.erp.forms import DetpagoForm
 from core.erp.mixins import ValidatePermissionRequiredMixin
-from core.erp.models import Pago, Detpago
+from core.erp.models import Detpago
 
 
-class PagoListView(LoginRequiredMixin, ValidatePermissionRequiredMixin, ListView):
-    model = Pago
-    template_name = 'pago/list.html'
-    permission_required = 'erp.view_pago'
+class DetpagoListView(LoginRequiredMixin, ValidatePermissionRequiredMixin, ListView):
+    model = Detpago
+    template_name = 'detpago/list.html'
+    permission_required = 'erp.view_detpago'
 
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
@@ -25,7 +25,7 @@ class PagoListView(LoginRequiredMixin, ValidatePermissionRequiredMixin, ListView
             action = request.POST['action']
             if action == 'searchdata':
                 data = []
-                for i in Pago.objects.all():
+                for i in Detpago.objects.all():
                     data.append(i.toJSON())
             else:
                 data['error'] = 'Ha ocurrido un error'
@@ -36,18 +36,18 @@ class PagoListView(LoginRequiredMixin, ValidatePermissionRequiredMixin, ListView
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Listado de Pagos'
-        context['create_url'] = reverse_lazy('erp:pago_create')
-        context['list_url'] = reverse_lazy('erp:pago_list')
-        context['entity'] = 'Pagos'
+        context['create_url'] = reverse_lazy('erp:detpago_create')
+        context['list_url'] = reverse_lazy('erp:detpago_list')
+        context['entity'] = 'DetallePagos'
         return context
 
 
-class PagoCreateView(LoginRequiredMixin, ValidatePermissionRequiredMixin, CreateView):
-    model = Pago
-    form_class = PagoForm
-    template_name = 'pago/create.html'
-    success_url = reverse_lazy('erp:pago_list')
-    permission_required = 'erp.add_pago'
+class DetpagoCreateView(LoginRequiredMixin, ValidatePermissionRequiredMixin, CreateView):
+    model = Detpago
+    form_class = DetpagoForm
+    template_name = 'detpago/create.html'
+    success_url = reverse_lazy('erp:detpago_list')
+    permission_required = 'erp.add_detpago'
     url_redirect = success_url
 
     def dispatch(self, request, *args, **kwargs):
@@ -68,19 +68,20 @@ class PagoCreateView(LoginRequiredMixin, ValidatePermissionRequiredMixin, Create
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Creación de Pago'
-        context['entity'] = 'Pagos'
+        context['title'] = 'Creación de Detalle Pago'
+        context['entity'] = 'DetallePagos'
         context['list_url'] = self.success_url
         context['action'] = 'add'
+        context['form'] = DetpagoForm()
         return context
 
 
-class PagoUpdateView(LoginRequiredMixin, ValidatePermissionRequiredMixin, UpdateView):
-    model = Pago
-    form_class = PagoForm
-    template_name = 'pago/create.html'
-    success_url = reverse_lazy('erp:pago_list')
-    permission_required = 'erp.change_pago'
+class DetpagoUpdateView(LoginRequiredMixin, ValidatePermissionRequiredMixin, UpdateView):
+    model = Detpago
+    form_class = DetpagoForm
+    template_name = 'detpago/create.html'
+    success_url = reverse_lazy('erp:detpago_list')
+    permission_required = 'erp.change_detpago'
     url_redirect = success_url
 
     def dispatch(self, request, *args, **kwargs):
@@ -102,18 +103,18 @@ class PagoUpdateView(LoginRequiredMixin, ValidatePermissionRequiredMixin, Update
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Edición de Pago'
-        context['entity'] = 'Pagos'
+        context['title'] = 'Edición de Detpago'
+        context['entity'] = 'DetallePagos'
         context['list_url'] = self.success_url
         context['action'] = 'edit'
         return context
 
 
-class PagoDeleteView(LoginRequiredMixin, ValidatePermissionRequiredMixin, DeleteView):
-    model = Pago
-    template_name = 'pago/delete.html'
-    success_url = reverse_lazy('erp:pago_list')
-    permission_required = 'erp.delete_pago'
+class DetpagoDeleteView(LoginRequiredMixin, ValidatePermissionRequiredMixin, DeleteView):
+    model = Detpago
+    template_name = 'detpago/delete.html'
+    success_url = reverse_lazy('erp:detpago_list')
+    permission_required = 'erp.delete_detpago'
     url_redirect = success_url
 
     def dispatch(self, request, *args, **kwargs):
@@ -130,10 +131,10 @@ class PagoDeleteView(LoginRequiredMixin, ValidatePermissionRequiredMixin, Delete
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Eliminación de Pago'
-        context['entity'] = 'Pagos'
+        context['title'] = 'Eliminación de Detpago'
+        context['entity'] = 'Detallepagos'
         context['list_url'] = self.success_url
-        context['form'] = DetpagoForm()
+        # context['form'] = DetpagoForm()
         return context
 
 
@@ -174,4 +175,42 @@ class DetpagoView(LoginRequiredMixin, ValidatePermissionRequiredMixin, TemplateV
         context['entity'] = 'Detpagos'
         context['form'] = DetpagoForm()
 
+        return context
+
+class DetpagoView(LoginRequiredMixin, ValidatePermissionRequiredMixin, TemplateView):
+    template_name = 'detpago/list.html'
+
+    @method_decorator(csrf_exempt)
+    # @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        data = {}
+        try:
+            action = request.POST['action']
+            if action == 'searchdata':
+                data = []
+                for i in Detpago.objects.all():
+                    data.append(i.toJSON())
+            elif action == 'add':
+                det = Detpago()
+                det.cuota = request.POST['cuota']
+                det.date_pago = request.POST['date_pago']
+                det.monto = request.POST['monto']
+                det.saldo = request.POST['saldo']
+                det.estado = request.POST['estado']
+                det.save()
+            else:
+                data['error'] = 'Ha ocurrido un error'
+        except Exception as e:
+            data['error'] = str(e)
+        return JsonResponse(data, safe=False)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Listado de Pago Cuotas'
+        context['list_url'] = reverse_lazy('erp:detpago')
+        context['entity'] = 'Detpagos'
+        context['form'] = DetpagoForm()
         return context
