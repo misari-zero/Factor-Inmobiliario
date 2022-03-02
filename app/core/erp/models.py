@@ -19,6 +19,7 @@ class Area(models.Model):
     def __str__(self):
         return self.name
 
+
     def toJSON(self):
         item = model_to_dict(self)
         return item
@@ -58,7 +59,7 @@ class Puesto(models.Model):
 
 
 class Departamento(models.Model):
-    name = models.CharField(max_length=150, verbose_name='Nombre')
+    name = models.CharField(max_length=150, verbose_name='Nombre', unique=True)
     date_joined = models.DateField(default=datetime.now, verbose_name='Fecha de registro')
     date_creation = models.DateTimeField(auto_now=True)
     date_uptated = models.DateTimeField(auto_now_add=True)
@@ -79,7 +80,7 @@ class Departamento(models.Model):
 
 
 class Provincia(models.Model):
-    name = models.CharField(max_length=150, verbose_name='Nombre')
+    name = models.CharField(max_length=150, verbose_name='Nombre', unique=True)
     departamento = models.ForeignKey(Departamento, on_delete=models.CASCADE, verbose_name='Departamento')
     date_joined = models.DateField(default=datetime.now, verbose_name='Fecha de registro')
     date_creation = models.DateTimeField(auto_now=True)
@@ -102,7 +103,7 @@ class Provincia(models.Model):
 
 
 class Distrito(models.Model):
-    name = models.CharField(max_length=150, verbose_name='Nombre')
+    name = models.CharField(max_length=150, verbose_name='Nombre', unique=True)
     departamento = models.ForeignKey(Departamento, on_delete=models.CASCADE, verbose_name='Departamento')
     provincia = models.ForeignKey(Provincia, on_delete=models.CASCADE, verbose_name='Provincia')
     date_joined = models.DateField(default=datetime.now, verbose_name='Fecha de registro')
@@ -127,14 +128,14 @@ class Distrito(models.Model):
 
 
 class Empleado(models.Model):
-    names = models.CharField(max_length=150, verbose_name='Nombres')
-    apellidos = models.CharField(max_length=150, verbose_name='Apellidos')
+    names = models.CharField(max_length=150, verbose_name='Nombres', unique=True)
+    apellidos = models.CharField(max_length=150, verbose_name='Apellidos', unique=True)
     dni = models.CharField(max_length=8, verbose_name='Dni', unique=True)
     age = models.PositiveSmallIntegerField(default=0, verbose_name='Edad')
     gender = models.CharField(max_length=10, choices=gender_choices, default='male', verbose_name='Sexo')
-    address = models.CharField(max_length=150, verbose_name='Dirección')
-    cellphone = models.CharField(max_length=9, verbose_name='Celular')
-    email = models.EmailField(max_length=254, verbose_name='Correo')
+    address = models.CharField(max_length=150, verbose_name='Dirección', null=True, blank=True)
+    cellphone = models.CharField(max_length=9, verbose_name='Celular', null=True, blank=True)
+    email = models.EmailField(max_length=254, verbose_name='Correo', null=True, blank=True)
     puesto = models.ForeignKey(Puesto, on_delete=models.CASCADE)
     area = models.ForeignKey(Area, on_delete=models.CASCADE, verbose_name='Área')
     departamento = models.ForeignKey(Departamento, on_delete=models.CASCADE, verbose_name='Departamento')
@@ -168,20 +169,21 @@ class Empleado(models.Model):
 
 
 class Cliente(models.Model):
-    names = models.CharField(max_length=150, verbose_name='Nombres')
+    names = models.CharField(max_length=150, verbose_name='Nombres', unique=True)
     fullname = models.CharField(max_length=150, verbose_name='Apellidos')
     dni = models.CharField(max_length=8, verbose_name='Dni')
     age = models.PositiveSmallIntegerField(default=0, verbose_name='Edad')
     gender = models.CharField(max_length=10, choices=gender_choices, default='male', verbose_name='Sexo')
     state_civil = models.CharField(max_length=50, choices=estadocivil_choices, verbose_name='Estado Civil')
     date_birth = models.DateField(verbose_name='Fecha de nacimiento')
-    address = models.CharField(max_length=150, verbose_name='Dirección')
+    address = models.CharField(max_length=150, verbose_name='Dirección', null=True, blank=True)
+    especialidad = models.CharField(max_length=150, verbose_name='Especialidad/Ocupación')
     departamento = models.ForeignKey(Departamento, on_delete=models.CASCADE, verbose_name='Departamento')
     provincia = models.ForeignKey(Provincia, on_delete=models.CASCADE, verbose_name='Provincia')
     distrito = models.ForeignKey(Distrito, on_delete=models.CASCADE, verbose_name='Distrito')
     phone = models.CharField(max_length=7, verbose_name='Teléfono')
     cellphone = models.CharField(max_length=9, verbose_name='Celular')
-    email = models.EmailField(max_length=254, verbose_name='Correo')
+    email = models.EmailField(max_length=254, verbose_name='Correo', null=True, blank=True)
     date_joined = models.DateField(default=datetime.now, verbose_name='Fecha de registro')
     date_creation = models.DateTimeField(auto_now=True)
     date_uptated = models.DateTimeField(auto_now_add=True)
@@ -208,10 +210,10 @@ class Cliente(models.Model):
 
 
 class Proyecto(models.Model):
-    name = models.CharField(max_length=150, verbose_name='Nombre')
-    description = models.CharField(max_length=150, verbose_name='Descripción')
+    name = models.CharField(max_length=150, verbose_name='Nombre', unique=True)
+    description = models.CharField(max_length=150, verbose_name='Descripción', null=True, blank=True)
     total_lote = models.IntegerField(default=0, verbose_name='Total de lotes')
-    address = models.CharField(max_length=150, verbose_name='Dirección')
+    address = models.CharField(max_length=150, verbose_name='Dirección', null=True, blank=True)
     departamento = models.ForeignKey(Departamento, on_delete=models.CASCADE, verbose_name='Departamento')
     provincia = models.ForeignKey(Provincia, on_delete=models.CASCADE, verbose_name='Provincia')
     distrito = models.ForeignKey(Distrito, on_delete=models.CASCADE, verbose_name='Distrito')
@@ -249,6 +251,10 @@ class Plano(models.Model):
 
     def __str__(self):
         return self.proyecto
+
+    # def save(self, *args, **kwargs):
+    #     self.mz = self.mz.uppercase()
+    #     return super(Plano, self).save(*args, **kwargs)
 
     def toJSON(self):
         item = model_to_dict(self)

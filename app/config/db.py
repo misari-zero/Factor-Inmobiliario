@@ -19,3 +19,14 @@ POSTGRESQL = {
         'PORT': '5432'
     }
 }
+
+HEROKU = {
+    'default': {
+        'ENGINE': 'django.db.backends.pg2',
+        'NAME': 'db',
+        'USER': 'eoteoiqlgbelxr',
+        'PASSWORD': 'fc614bab3184b80c0f39e851c6c7c882b54b71de75ded7b2ea2c07db9c99471a',
+        'HOST': 'ec2-34-233-157-9.compute-1.amazonaws.com',
+        'PORT': '5432'
+    }
+}

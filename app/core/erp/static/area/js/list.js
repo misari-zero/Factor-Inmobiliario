@@ -16,7 +16,6 @@ $(function () {
             {"data": "id"},
             {"data": "name"},
             {"data": "turno"},
-            {"data": "turno"},
             {"data": "date_joined"},
             {"data": "id"},
         ],

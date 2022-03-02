@@ -75,10 +75,10 @@ class PuestoForm(ModelForm):
 
 
 class DepartamentoForm(ModelForm):
-    departamento = ModelChoiceField(queryset=Departamento.objects.all(), widget=Select(attrs={
-        'class': 'form-control select2',
-        'style': 'width: 100%'
-    }))
+    # departamento = ModelChoiceField(queryset=Departamento.objects.all(), widget=Select(attrs={
+    #     'class': 'form-control select2',
+    #     'style': 'width: 100%'
+    # }))
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -126,14 +126,15 @@ class ProvinciaForm(ModelForm):
             'name': TextInput(
                 attrs={
                     'placeholder': 'Ingrese un nombre',
+                    'autocomplete': 'off',
                 }
             ),
         }
 
-    provincia = ModelChoiceField(queryset=Provincia.objects.none(), widget=Select(attrs={
-        'class': 'form-control select2',
-        'style': 'width: 100%'
-    }))
+    # departamento = ModelChoiceField(queryset=Departamento.objects.none(), widget=Select(attrs={
+    #     'class': 'form-control select2',
+    #     'style': 'width: 100%'
+    # }))
 
     def save(self, commit=True):
         data = {}
@@ -167,6 +168,11 @@ class DistritoForm(ModelForm):
             ),
         }
 
+    # departamento = ModelChoiceField(queryset=Departamento.objects.none(), widget=Select(attrs={
+    #     'class': 'form-control select2',
+    #     'style': 'width: 100%'
+    # }))
+
     def save(self, commit=True):
         data = {}
         form = super()
@@ -192,11 +198,13 @@ class EmpleadoForm(ModelForm):
             'names': TextInput(
                 attrs={
                     'placeholder': 'Ingrese sus nombres',
+                    'autocomplete': 'off',
                 }
             ),
             'apellidos': TextInput(
                 attrs={
                     'placeholder': 'Ingrese sus apellidos',
+                    'autocomplete': 'off',
                 }
             ),
             'dni': TextInput(
@@ -323,19 +331,9 @@ class PlanoForm(ModelForm):
         model = Plano
         fields = '__all__'
         # widgets = {
-        #     'names': TextInput(
+        #     'mz': TextInput(
         #         attrs={
-        #             'placeholder': 'Ingrese sus nombres',
-        #         }
-        #     ),
-        #     'fullname': TextInput(
-        #         attrs={
-        #             'placeholder': 'Ingrese sus apellidos',
-        #         }
-        #     ),
-        #     'dni': TextInput(
-        #         attrs={
-        #             'placeholder': 'Ingrese su dni',
+        #             '': 'Ingrese sus nombres',
         #         }
         #     ),
         # }

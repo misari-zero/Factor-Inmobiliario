@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView, TemplateView
 
 from core.erp.forms import InventarioForm
 from core.erp.mixins import ValidatePermissionRequiredMixin
@@ -31,7 +31,7 @@ class InventarioListView(LoginRequiredMixin, ValidatePermissionRequiredMixin, Li
                 data['error'] = 'Ha ocurrido un error'
         except Exception as e:
             data['error'] = str(e)
-        return JsonResponse(data, safe=False)
+        return JsonResponse(data, safe=False)  # safe=False --> Serializa objetos que no son del diccionario
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -69,7 +69,7 @@ class InventarioCreateView(LoginRequiredMixin, ValidatePermissionRequiredMixin, 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Creación de Inventario'
-        context['entity'] = 'Inventario'
+        context['entity'] = 'Inventarios'
         context['list_url'] = self.success_url
         context['action'] = 'add'
         return context
@@ -102,8 +102,8 @@ class InventarioUpdateView(LoginRequiredMixin, ValidatePermissionRequiredMixin, 
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Edición un Inventario'
-        context['entity'] = 'Inventarios'
+        context['title'] = 'Edición de Inventario'
+        context['entity'] = 'Inventario'
         context['list_url'] = self.success_url
         context['action'] = 'edit'
         return context
