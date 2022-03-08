@@ -1,0 +1,21 @@
+{% extends 'list.html' %}
+{% load static %}
+{% block head_list %}
+    <script src="{% static 'inventario/js/list.js' %}"></script>
+{% endblock %}
+
+{% block columns %}
+    <tr>
+        <th scope="col" style="width: 5%;">Nro</th>
+        <th scope="col" style="width: 25%;">Proyecto</th>
+        <th scope="col" style="width: 25%;">Mz</th>
+        <th scope="col" style="width: 10%;">Lote</th>
+        <th scope="col" style="width: 10%;">Metros</th>
+        <th scope="col" style="width: 15%;">Estado</th>
+        <th scope="col" style="width: 10%;">Opciones</th>
+    </tr>
+{% endblock %}
+
+{% block javascript %}
+
+{% endblock %}
