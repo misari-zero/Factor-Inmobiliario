@@ -1,0 +1,22 @@
+{% load static %}
+<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+    <li class="nav-item menu-open">
+        <a href="#" class="nav-link active">
+{#            <img src="{% static 'img/contabilidad.png' %}" width="30" height="30"/>#}
+            {#                        <img src="{% static 'img/icon_config.png' %}" width="30" height="30"/>#}
+            <i class="fas fa-registered"></i>
+            <p>
+                Asistencia
+                <i class="fas fa-angle-left right"></i>
+            </p>
+        </a>
+        <ul class="nav nav-treeview">
+            <li class="nav-item">
+                <a href="{% url 'erp:asistencia_list' %}" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Registro</p>
+                </a>
+            </li>
+        </ul>
+    </li>
+</ul>
