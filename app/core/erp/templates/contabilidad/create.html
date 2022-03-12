@@ -15,6 +15,329 @@
     {#    <script src="{% static 'cliente/js/form.js' %}"></script>#}
 {% endblock %}
 
+{% block content %}
+    <form method="post" action="." enctype="multipart/form-data">
+        <div class="card card-primary">
+            <div class="card-header">
+                <h3 class="card-title">
+                    {% if action == 'add' %}
+                        <i class="fas fa-plus"></i>
+                    {% else %}
+                        <i class="fas fa-edit"></i>
+                    {% endif %}
+                    {{ title }}
+                </h3>
+            </div>
+            <div class="card-body">
+{#                {% csrf_token %}#}
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card card-white">
+{#                            <div class="card-header">#}
+{#                                <h3 class="card-title"><b><u>Datos del cliente: </u></b></h3>#}
+{#                            </div>#}
+                            <div class="card-body">
+                                {% csrf_token %}
+                                <input type="hidden" name="action" value="{{ action }}">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label>Cliente:</label>
+                                            {{ form.cliente }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label>1era Cuota:</label>
+                                            {{ form.factura }}
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label>2da Cuota:</label>
+                                            {{ form.factura2 }}
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label>3era Cuota:</label>
+                                            {{ form.factura3 }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label>4ta Cuota:</label>
+                                            {{ form.factura4 }}
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label>5ta Cuota:</label>
+                                            {{ form.factura5 }}
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label>6ta Cuota:</label>
+                                            {{ form.factura6 }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label>7ma Cuota:</label>
+                                            {{ form.factura7 }}
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label>8va Cuota:</label>
+                                            {{ form.factura8 }}
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label>9na Cuota:</label>
+                                            {{ form.factura9 }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label>10ma Cuota:</label>
+                                            {{ form.factura10 }}
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label>11va Cuota:</label>
+                                            {{ form.factura11 }}
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label>12va Cuota:</label>
+                                            {{ form.factura12 }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label>13va Cuota:</label>
+                                            {{ form.factura13 }}
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label>14va Cuota:</label>
+                                            {{ form.factura14 }}
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label>15va Cuota:</label>
+                                            {{ form.factura15 }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label>16va Cuota:</label>
+                                            {{ form.factura16 }}
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label>17va Cuota:</label>
+                                            {{ form.factura17 }}
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label>18va Cuota:</label>
+                                            {{ form.factura18 }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label>19va Cuota:</label>
+                                            {{ form.factura19 }}
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label>20va Cuota:</label>
+                                            {{ form.factura20 }}
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label>21va Cuota:</label>
+                                            {{ form.factura21 }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label>22va Cuota:</label>
+                                            {{ form.factura22 }}
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label>23va Cuota:</label>
+                                            {{ form.factura23 }}
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label>24va Cuota:</label>
+                                            {{ form.factura24 }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label>25va Cuota:</label>
+                                            {{ form.factura25 }}
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label>26va Cuota:</label>
+                                            {{ form.factura26 }}
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label>27va Cuota:</label>
+                                            {{ form.factura27 }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label>28va Cuota:</label>
+                                            {{ form.factura28 }}
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label>29va Cuota:</label>
+                                            {{ form.factura29 }}
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label>30va Cuota:</label>
+                                            {{ form.factura30 }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label>31va Cuota:</label>
+                                            {{ form.factura31 }}
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label>32va Cuota:</label>
+                                            {{ form.factura32 }}
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label>33va Cuota:</label>
+                                            {{ form.factura33 }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label>34va Cuota:</label>
+                                            {{ form.factura34 }}
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label>35va Cuota:</label>
+                                            {{ form.factura35 }}
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label>36va Cuota:</label>
+                                            {{ form.factura36 }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label>37va Cuota:</label>
+                                            {{ form.factura37 }}
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label>38va Cuota:</label>
+                                            {{ form.factura38 }}
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label>39va Cuota:</label>
+                                            {{ form.factura39 }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label>40va Cuota:</label>
+                                            {{ form.factura40 }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label>Fecha Registro:</label>
+                                        {{ form.date_joined }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <button type="submit" class="btn btn-primary btn-flat">
+                    <i class="fas fa-save"></i> Guardar registro
+                </button>
+                <a href="{{ list_url }}" class="btn btn-danger btn-flat">
+                    <i class="fas fa-times"></i> Cancelar
+                </a>
+            </div>
+        </div>
+    </form>
+{% endblock %}
+
 {% block javascript %}
     <script>
         $(function () {
@@ -23,5 +346,6 @@
                 language: 'es'
             });
         });
+
     </script>
 {% endblock %}

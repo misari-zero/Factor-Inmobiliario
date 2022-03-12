@@ -1,6 +1,9 @@
+// let tblContabilidad;
 $(function () {
-    $('#data').DataTable({
+   // tblContabilidad = $('#data').DataTable({
+   $('#data').DataTable({
         responsive: true,
+        // scrollX: true,
         autoWidth: false,
         destroy: true,
         deferRender: true,
@@ -13,6 +16,13 @@ $(function () {
             dataSrc: ""
         },
         columns: [
+            // {
+            //     "className": 'details-control',
+            //     "orderable": false,
+            //     "data": null,
+            //     "defaultContent": ''
+            // },
+
             {"data": "id"},
             {"data": "cliente.names"},
             {"data": "factura"},

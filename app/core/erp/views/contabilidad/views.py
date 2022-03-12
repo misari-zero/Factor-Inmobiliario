@@ -10,10 +10,10 @@ from core.erp.mixins import ValidatePermissionRequiredMixin
 from core.erp.models import Contabilidad
 
 
-class ClienteListView(LoginRequiredMixin, ValidatePermissionRequiredMixin, ListView):
-    model = Cliente
-    template_name = 'cliente/list.html'
-    permission_required = 'erp.view_cliente'
+class ContabilidadListView(LoginRequiredMixin, ValidatePermissionRequiredMixin, ListView):
+    model = Contabilidad
+    template_name = 'contabilidad/list.html'
+    permission_required = 'erp.view_contabilidad'
 
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
@@ -25,7 +25,7 @@ class ClienteListView(LoginRequiredMixin, ValidatePermissionRequiredMixin, ListV
             action = request.POST['action']
             if action == 'searchdata':
                 data = []
-                for i in Cliente.objects.all():
+                for i in Contabilidad.objects.all():
                     data.append(i.toJSON())
             else:
                 data['error'] = 'Ha ocurrido un error'
@@ -35,19 +35,19 @@ class ClienteListView(LoginRequiredMixin, ValidatePermissionRequiredMixin, ListV
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Listado de Clientes'
-        context['create_url'] = reverse_lazy('erp:cliente_create')
-        context['list_url'] = reverse_lazy('erp:cliente_list')
-        context['entity'] = 'Clientes'
+        context['title'] = 'Listado de Contabilidad'
+        context['create_url'] = reverse_lazy('erp:contabilidad_create')
+        context['list_url'] = reverse_lazy('erp:contabilidad_list')
+        context['entity'] = 'Contabilidad'
         return context
 
 
-class ClienteCreateView(LoginRequiredMixin, ValidatePermissionRequiredMixin, CreateView):
-    model = Cliente
-    form_class = ClienteForm
-    template_name = 'cliente/create.html'
-    success_url = reverse_lazy('erp:cliente_list')
-    permission_required = 'erp.add_cliente'
+class ContabilidadCreateView(LoginRequiredMixin, ValidatePermissionRequiredMixin, CreateView):
+    model = Contabilidad
+    form_class = ContabilidadForm
+    template_name = 'contabilidad/create.html'
+    success_url = reverse_lazy('erp:contabilidad_list')
+    permission_required = 'erp.add_contabilidad'
     url_redirect = success_url
 
     def dispatch(self, request, *args, **kwargs):
@@ -68,19 +68,19 @@ class ClienteCreateView(LoginRequiredMixin, ValidatePermissionRequiredMixin, Cre
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Creación de Cliente'
-        context['entity'] = 'Clientes'
+        context['title'] = 'Creación de Contabilidad'
+        context['entity'] = 'Contabilidad'
         context['list_url'] = self.success_url
         context['action'] = 'add'
         return context
 
 
-class ClienteUpdateView(LoginRequiredMixin, ValidatePermissionRequiredMixin, UpdateView):
-    model = Cliente
-    form_class = ClienteForm
-    template_name = 'cliente/create.html'
-    success_url = reverse_lazy('erp:cliente_list')
-    permission_required = 'erp.change_cliente'
+class ContabilidadUpdateView(LoginRequiredMixin, ValidatePermissionRequiredMixin, UpdateView):
+    model = Contabilidad
+    form_class = ContabilidadForm
+    template_name = 'contabilidad/create.html'
+    success_url = reverse_lazy('erp:contabilidad_list')
+    permission_required = 'erp.change_contabilidad'
     url_redirect = success_url
 
     def dispatch(self, request, *args, **kwargs):
@@ -102,18 +102,18 @@ class ClienteUpdateView(LoginRequiredMixin, ValidatePermissionRequiredMixin, Upd
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Edición de Cliente'
-        context['entity'] = 'Clientes'
+        context['title'] = 'Edición de Contabilidad'
+        context['entity'] = 'Contabilidad'
         context['list_url'] = self.success_url
         context['action'] = 'edit'
         return context
 
 
-class ClienteDeleteView(LoginRequiredMixin, ValidatePermissionRequiredMixin, DeleteView):
-    model = Cliente
-    template_name = 'cliente/delete.html'
-    success_url = reverse_lazy('erp:cliente_list')
-    permission_required = 'erp.delete_cliente'
+class ContabilidadDeleteView(LoginRequiredMixin, ValidatePermissionRequiredMixin, DeleteView):
+    model = Contabilidad
+    template_name = 'contabilidad/delete.html'
+    success_url = reverse_lazy('erp:contabilidad_list')
+    permission_required = 'erp.delete_contabilidad'
     url_redirect = success_url
 
     def dispatch(self, request, *args, **kwargs):
@@ -130,7 +130,7 @@ class ClienteDeleteView(LoginRequiredMixin, ValidatePermissionRequiredMixin, Del
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Eliminación de un Cliente'
-        context['entity'] = 'Clientes'
+        context['title'] = 'Eliminación de un Contabilidad'
+        context['entity'] = 'Contabilidad'
         context['list_url'] = self.success_url
         return context
